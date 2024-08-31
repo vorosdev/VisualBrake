@@ -2,6 +2,10 @@
 
 **VisualBrake** es una herramienta para recordarte tomar descansos regulares y realizar ejercicios para tus ojos cada 20 minutos mientras trabajas frente a una pantalla.
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/dd5c74f8-435d-44b8-90b1-8a3ea1aa3f79" />
+</div>
+
 ## Instalación
 
 Sigue los siguientes pasos para la Instalación:
