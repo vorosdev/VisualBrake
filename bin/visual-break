@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -eu
+
+# Ejercicios visuales
+EXERCISES=(
+    "Mira algo a 6 metros de distancia durante 20 segundos."
+    "Parpadea frecuentemente para humedecer tus ojos."
+    "Cambia el enfoque entre un objeto cercano y uno lejano 10 veces."
+    "Haz movimientos suaves con los ojos hacia arriba, abajo, derecha e izquierda."
+    "Realiza palming: cubre tus ojos con las manos cálidas durante 1-2 minutos."
+    "Dibuja círculos grandes con tus ojos, primero en sentido horario y luego antihorario."
+)
+
+# Ejercicio aleatorio
+EXERCISE=${EXERCISES[$RANDOM % ${#EXERCISES[@]}]}
+
+# Mensaje de notificación
+TITLE="Descanso Visual"
+MESSAGE="Es hora de tomar un descanso. ${EXERCISE}"
+ICON=""
+
+# Mostrar la notificación
+notify-send "$TITLE" "$MESSAGE" -i "$ICON" -t 20000

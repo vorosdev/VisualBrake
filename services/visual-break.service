@@ -1,0 +1,6 @@
+[Unit]
+Description=Visual break reminder
+
+[Service]
+Type=oneshot
+ExecStart=/home/user/.local/bin/visual-break
