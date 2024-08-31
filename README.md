@@ -49,17 +49,3 @@ Desinstalar la herramienta
 rm ~/.local/bin/visual-break
 rm ~/.config/systemd/user/visual-break.*
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-

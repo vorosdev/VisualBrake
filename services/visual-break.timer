@@ -3,7 +3,7 @@ Description=Runs visual break reminder every 20 minutes
 
 [Timer]
 Unit=visual-break.service
-OnBootSec=5m
+OnBootSec=20m
 OnUnitActiveSec=20m
 
 [Install]
