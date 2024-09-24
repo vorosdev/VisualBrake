@@ -16,17 +16,6 @@ SYSTEMD_USER_DIR="$HOME/.config/systemd/user"
 SERVICE_FILE="$SYSTEMD_USER_DIR/visual-break.service"
 TIMER_FILE="$SYSTEMD_USER_DIR/visual-break.timer"
 BIN_FILE="$BIN_DIR/visual-break"
-CRON_FILE="$HOME/.cron_visual_break"
-
-check_files_exist() {
-    local files=("$@")
-    for file in "${files[@]}"; do
-        if [[ ! -f "$file" ]]; then
-            echo -e "${redColor}[!] Error: El archivo $file no existe.${endColor}"
-            exit 1
-        fi
-    done
-}
 
 create_directories() {
     echo -e "${purpleColor}Creando directorios necesarios...${endColor}"
@@ -34,14 +23,25 @@ create_directories() {
     mkdir -p "$SYSTEMD_USER_DIR"
 }
 
+check_files_exist() {
+    local files=("$@")
+    for file in "${files[@]}"; do
+        if [[ -n "$file" && ! -f "$file" ]]; then
+            echo -e "${redColor}[!] Error: El archivo $file no existe.${endColor}"
+            exit 1
+        fi
+    done
+}
+
 copy_files() {
     local src_bin="$1"
     local dst_bin="$2"
-    local src_service="$3"
-    local dst_service="$4"
-    local src_timer="$5"
-    local dst_timer="$6"
+    local src_service="${3:-}"  # Valor por defecto vacío
+    local dst_service="${4:-}"  # Valor por defecto vacío
+    local src_timer="${5:-}"    # Valor por defecto vacío
+    local dst_timer="${6:-}"    # Valor por defecto vacío
 
+    # Verifica solo los archivos que no estén vacíos
     check_files_exist "$src_bin" "$src_service" "$src_timer"
 
     echo -e "${purpleColor}Copiando archivos...${endColor}"
@@ -92,32 +92,9 @@ install_systemd() {
     echo -e "\n${greenColor}[+] VisualBrake se ha instalado y configurado correctamente.${endColor}\n"
 }
 
-install_cron() {
-    echo -e "${yellowColor}Instalando VisualBrake con cron...${endColor}"
-    create_directories
-    copy_files bin/visual-break "$BIN_FILE"
-
-    echo "*/20 * * * * $BIN_FILE" > "$CRON_FILE"
-
-    if ! command -v crontab &> /dev/null; then
-        echo -e "${redColor}[!] Error: crontab no está disponible.${endColor}"
-        exit 1
-    fi
-
-    if ! crontab "$CRON_FILE"; then
-        echo -e "${redColor}[!] Error instalando el archivo cron.${endColor}"
-        rm "$CRON_FILE"
-        exit 1
-    fi
-
-    rm "$CRON_FILE"
-    echo -e "\n${greenColor}[+] VisualBrake se ha instalado y configurado correctamente.${endColor}\n"
-}
-
 print_help() {
-    echo -e "${yellowColor}Uso: $0 [systemd|cron]${endColor}"
+    echo -e "${yellowColor}Uso: $0 [systemd]${endColor}"
     echo "  systemd   - Instala VisualBrake con systemd timers"
-    echo "  cron      - Instala VisualBrake con tareas cron"
 }
 
 if [ $# -ne 1 ]; then
@@ -128,9 +105,6 @@ fi
 case "$1" in
     systemd)
         install_systemd
-        ;;
-    cron)
-        install_cron
         ;;
     *)
         print_help

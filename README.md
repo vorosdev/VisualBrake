@@ -1,50 +1,45 @@
 # VisualBrake
 
-
-[**VisualBrake**](https://github.com/vorosdev/VisualBrake)  es una herramienta para recordarte tomar descansos regulares y realizar ejercicios para tus ojos cada 20 minutos mientras trabajas frente a una pantalla.
+[**VisualBrake**](https://github.com/vorosdev/VisualBrake) is a tool that reminds you to take 
+regular breaks and perform eye exercises every 20 minutes while you work in front of a screen.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/dd5c74f8-435d-44b8-90b1-8a3ea1aa3f79" />
 </div>
 
-## Instalación
+# Installation
 
-Sigue los siguientes pasos para la Instalación:
+Follow these steps for installation:
 
-### Requisitos
+Requirements
 
-- Systemd (systemd-timers) o crontab.
-- Bash y libnotify. 
-- dunst, mako o cualquier otro demonio que use libnotify.
+- Systemd (systemd-timers)
+- Bash 
+- libnotify
+- Notification daemon (e.g., dunst or mako)
 
-### Instalación 
+These requirements typically come pre-installed with the distribution.
 
-Clona el repositorio de `VisualBrake`:
+### Installation 
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/vorosdev/VisualBrake.git
 cd VisualBrake
-./install.sh <opcion>
+./install.sh systemd
 ```
 
-### Desintalacion o desactivar el servicio
+### Uninstallation or Disabling the Service
 
-Desactivar y parar el servicio
+Disable and stop the service:
 
 ```bash
 systemctl --user disable visual-break.timer
 systemctl --user stop visual-break.timer
 ```
 
-Para el `crontab` comentamos la linea:
-
-`crontab -e`
-
-```bash
-# */20 * * * * /home/user/.local/bin/visual-break
-```
-
-Desinstalar la herramienta
+Uninstall the tool:
 
 ```bash
 rm ~/.local/bin/visual-break
